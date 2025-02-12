@@ -1,8 +1,6 @@
 const express = require('express')
 
 const router = express.Router();
-
-const arrayPosts = require('../data/posts.js');
 	
 // const pizzaController = require('../controllers/pizzaController');
 
