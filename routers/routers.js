@@ -2,7 +2,11 @@ const express = require('express')
 
 const router = express.Router();
 
+const checkTime = require('../middlewares/checkTime');
+
 const { index, show, store, update, patch, destroy } = require('../controllers/postsController');
+
+router.get('/', checkTime, index);
 
 router.get('/', index);
 

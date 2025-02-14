@@ -1,5 +1,5 @@
-/*Esercizio
-Esercizio
+/*
+Esercizio - Giorno 1
 Milestone 1
 Come prima cosa, creiamo un controller per i nostri post, in una cartella controllers.
 All’interno, prepariamo tutte le funzioni necessarie e copiamo in ciascuna la logica
@@ -21,7 +21,7 @@ Implementare un filtro di ricerca nella index che mostri solo i post che hanno u
 In Show e Destroy, controllare se il parametro si riferisce ad un post esistente, in caso contrario,
 rispondere con uno stato 404 e un messaggio d’errore, sempre in formato JSON.
 
-Esercizio
+Esercizio - Giorno 2
 Milestone 1
 Per iniziare, andiamo su Postman e prepariamo una nuova chiamata verso la nostra rotta store.
 Impostiamo il verbo e l’endpoint corretti
@@ -37,7 +37,13 @@ Milestone 3
 Implementiamo quindi la logica per aggiungere un nuovo post al nostro blog, e prepariamo la risposta adeguata.
 Testiamolo con postman.
 Milestone 4
-Ripetiamo il procedimento per la rotta di Update, in modo da avere la possibilità di modificare le nostre risorse.*/
+Ripetiamo il procedimento per la rotta di Update, in modo da avere la possibilità di modificare le nostre risorse.
+
+Esercizio - Giorno 3
+Dopo aver completato tutte le operazioni CRUD, completiamo le nostre API inserendo un middleware per la gestione
+delle rotte non registrate e uno per la gestione degli errori.
+Se viene chiamato un endpoint inesistente, un middleware dovrà rispondere un messaggio e uno status appropriato.
+Se viene generato un errore, un middleware si occuperà di rispondere con un messaggio e uno status appropriato.*/
 
 const express = require("express");
 
@@ -47,9 +53,19 @@ const port = 3000;
 
 const postsRouter = require('./routers/routers.js');
 
+const errorsHandler = require('./middlewares/errorsHandler.js');
+
+const notFound = require('./middlewares/notFound.js');
+
+app.use( errorsHandler );
+
+app.use( notFound );
+
 app.use(express.static('public'));
 
 app.use(express.json());
+
+app.use("/api/posts", postsRouter)
 
 app.get("/", (req, res) => {
     res.type('html').send(
@@ -66,8 +82,6 @@ app.get("/", (req, res) => {
         </html> `
     )
 });
-
-app.use("/api/posts", postsRouter)
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
