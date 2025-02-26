@@ -1,5 +1,4 @@
 const arrayPosts = require('../data/posts.js');
-const { post } = require('../routers/routers.js');
 
 function index(req, res) {
     
