@@ -61,13 +61,11 @@ const notFound = require('./middlewares/notFound.js');
 
 app.use(
     cors({
-      origin: 'http://localhost:5173/',
+      origin: '*',
     })
 );
 
 app.use( errorsHandler );
-
-app.use( notFound );
 
 app.use(express.static('public'));
 
@@ -90,6 +88,8 @@ app.get("/", (req, res) => {
         </html> `
     )
 });
+
+app.use( notFound );
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
